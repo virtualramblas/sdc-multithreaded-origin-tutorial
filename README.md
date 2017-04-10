@@ -27,7 +27,7 @@ $MAVEN_HOME/bin/mvn eclipse:eclipse
 Maven creates the template files also to implement a custom destination, a custom processor and a custom executor in the *destination*, *executor* and *processor* packages: you can delete them all because the goal here is to implement a new origin only.  
 ### Modifying the Origin Template Code
 #### Extending the Proper Parent Class
-The template code contains a class called ```SampleSource.java``` which extends the SDC ```BaseSource``` abstract class. The first thing to change is to make the SampleSource class to extend ```com.streamsets.pipeline.api.base.BasePushSource```:  
+The template code contains a class called ```SampleSource.java``` which extends the SDC ```BaseSource``` abstract class. The first change to do is to make the SampleSource class to extend ```com.streamsets.pipeline.api.base.BasePushSource```:  
 
 ```java  
 public abstract class SampleSource extends BasePushSource   
@@ -94,7 +94,7 @@ public int getNumberOfThreads() {
 }
 ```
 #### Thread Schedule and Execution 
-Threads scheduling and execution need to be do in the ```SampleDSource``` *produce* method. One way to to this is to use an ```ExecutorService``` with ```Future```:  
+Threads scheduling and execution need to be done in the ```SampleSource``` *produce* method. One way to to this is to use an ```ExecutorService``` with ```Future```:  
 
 ```java
 ExecutorService executor = Executors.newFixedThreadPool(getNumberOfThreads()); 
@@ -104,7 +104,7 @@ List<Future<Runnable>> futures = new ArrayList<>(getNumberOfThreads());
 for(int i = 0; i < getNumberOfThreads(); i++) {
       Future future = executor.submit(new RecordGeneratorThread(i));
       futures.add(future);
-     }
+}
         
 // Wait for execution end
 for(Future<Runnable> f : futures) {
