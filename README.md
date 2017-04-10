@@ -32,7 +32,7 @@ The template code contains a class called ```SampleSource.java``` which extends 
 ```java  
 public abstract class SampleSource extends BasePushSource   
 ```  
-You have then to override the produce method for the new parent class  
+You have then to override the *produce* method for the new parent class  
 
 ```java
 public void produce(Map<String, String> offsets, int maxBatchSize) throws StageException  
@@ -72,7 +72,7 @@ and finally processed by the remainder of the pipeline:
 getContext().processBatch(batchContext);
 ```
 #### Thread Configuration
-In order to allow the set up of the number of thread to issue at each pipeline run, you can add a configuration parameter to the ```SampleDSource.java``` class:  
+In order to allow the set up of the number of threads to issue at each pipeline run, you can add a configuration parameter to the ```SampleDSource.java``` class:  
 
 ```java
 @ConfigDef(
@@ -134,4 +134,4 @@ tar xvfz $SDC-HOME/user-libs/samplestage-1.0-SNAPSHOT.tar.gz
 ```
 Restart SDC in order to make the new origin available for the pipelines.   
 ### Running the Origin in a Pipeline  
-After restarting SDC you will see the new origin available in the origin list and you can add it to any pipeline.   
+After restarting SDC you will see the new origin available in the origin list and you can use it in any pipeline.   
