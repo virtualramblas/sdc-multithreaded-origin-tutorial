@@ -121,6 +121,45 @@ Finally terminate the executor:
 executor.shutdownNow();
 ```
 This command also cleans up the threads that have been created previously.  
+### Unit Testing
+In order to unit testing the code you can use the [JUnit](http://junit.org/junit4/) framework and the facilites provided by the Data Collector SDK. For a multithreaded origin you have to use the ```com.streamsets.pipeline.sdk.PushSourceRunner``` class. You can initialize a shared instance of the runner in the *before* method of your TestCase class:  
+
+```java
+PushSourceRunner runner;
+
+@Before
+public void before() throws StageException {
+   runner = new PushSourceRunner.Builder(SampleDSource.class)
+   .addConfiguration("threadCount", 1)
+   .addOutputLane("lane")
+   .build();
+   runner.runInit();  
+}
+```
+Then you can use it across the test methods like in the follow example:  
+
+```java
+final List<Record> records = new ArrayList<>();
+runner.runProduce(Collections.<String, String>emptyMap(), 1, new PushSourceRunner.Callback() {
+	@Override
+	public void processBatch(StageRunner.Output output) {
+	  records.clear();
+	  records.addAll(output.getRecords().get("lane"));
+	  runner.setStop();
+	}
+});
+runner.waitOnProduce();
+
+Assert.assertEquals(1, records.size());
+```
+Finally don't forget to stop it in the *after* method:  
+
+```java
+@After
+public void after() throws StageException {
+    runner.runDestroy();
+}
+```  
 ### Build and Deploy  
 To generate the final artifact you need to run the following Maven command:  
 
