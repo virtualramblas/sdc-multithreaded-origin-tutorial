@@ -2,7 +2,7 @@ Creating a Custom StreamSets Origin which Supports Parallel Execution
 ===================================
 
 In [SDC](https://streamsets.com/products/sdc/) a multithreaded pipeline is a pipeline having an origin that supports parallel execution, so the pipeline can run in multiple threads. This tutorial explains how to get started writing your own custom Streamsets origin that supports parallel execution.  
-This tutorial completes the excellent [one](https://github.com/streamsets/tutorials/tree/master/tutorial-origin) by Pat Patterson available in the official SDC GitHub repository, which covers the creation process for a single threaded origin only. I higly recommend to follow that tutorial before starting with this one.  
+This tutorial completes the excellent [one](https://github.com/streamsets/tutorials/tree/master/tutorial-origin) by Pat Patterson available in the official SDC GitHub repository, which covers the creation process for a single threaded origin only. I highly recommend to follow that tutorial before starting with this one.  
 This tutorial refers to the SDC version 2.4.0.0, but the process should apply to newer versions as well.  
 ### What is a Streamsets Origin?
 In SDC an origin stage represents the source of data for a pipeline. An origin reads data from some source, producing records to be consumed by the remainder of the pipeline. Several origins are currently available in the SDC libraries and they cover the most popular data sources, but it is possible any way to implement custom origins through the Data Collector APIs.  
